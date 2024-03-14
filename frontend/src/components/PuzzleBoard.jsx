@@ -9,58 +9,16 @@ export const PuzzleBoard = () => {
   const [puzzle, setPuzzle] = useState(Array(9).fill(null));
   let [availableNumbers, setAvailableNumbers] = useState([...initialNumbers]);
 
-  // const handleDrop = (targetCellId, droppedNumber, originCellId) => {
-  //   let newPuzzle = puzzle;
-    
-  //   if (originCellId !== undefined) {
-  //     // If originCellId is provided, we're swapping numbers within the puzzle
-  //     const numberAtTargetCell = newPuzzle[targetCellId];
-  //     newPuzzle[targetCellId] = droppedNumber;
-  //     newPuzzle[originCellId] = numberAtTargetCell;
-  //   } else {
-  //     // This part handles dropping a new number into the puzzle
-  //     if (newPuzzle[targetCellId] === null) {
-  //       newPuzzle[targetCellId] = droppedNumber;
-  //       // Remove the number from available numbers only if it's not already in the puzzle
-  //       if (!newPuzzle.includes(droppedNumber)) {
-  //         availableNumbers = availableNumbers.filter(num => num !== droppedNumber);
-  //         setAvailableNumbers(availableNumbers);
-  //       }
-  //     } else {
-  //       // If dropping on a cell that already has a number, we swap them if it's from the available numbers
-  //       if (!newPuzzle.includes(droppedNumber)) {
-  //         const temp = newPuzzle[targetCellId];
-  //         newPuzzle[targetCellId] = droppedNumber;
-  //         // Put the swapped out number back into available numbers
-  //         availableNumbers = availableNumbers.concat(temp).sort((a, b) => a - b);
-  //         availableNumbers = availableNumbers.filter(num => num !== droppedNumber);
-  //         setAvailableNumbers(availableNumbers);
-  //       }
-  //     }
-  //   }
-
-  //   setPuzzle(newPuzzle);
-  // };
-
-  const handleDrop = (cellId, droppedNumber, isDraggingOut=  false) => {
+  const handleDrop = (cellId, droppedNumber) => {
     let newPuzzle = puzzle;
     let temp = 0
 
-    if(isDraggingOut){
-      if (newPuzzle[cellId] !== null) {
-        availableNumbers.push(newPuzzle[cellId]);
-        newPuzzle[cellId] = null;
-        setAvailableNumbers(availableNumbers);
-      }
-    }
-
-   else if(newPuzzle[cellId] === null)
+    if(newPuzzle[cellId] === null)
     {
       newPuzzle[cellId] = droppedNumber;
       availableNumbers = availableNumbers.filter(num => num !== droppedNumber);
       setAvailableNumbers(availableNumbers);
     }
-
     else{
         temp = newPuzzle[cellId];
         newPuzzle[cellId] = droppedNumber;
@@ -70,9 +28,6 @@ export const PuzzleBoard = () => {
     }
 
     setPuzzle(newPuzzle);
-
-   
-    // console.log(availableNumbers)
 
     
   };
